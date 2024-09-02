@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Client.Views.PersonDetailPage"
+             xmlns:vm="clr-namespace:Client.ViewModels"
+             xmlns:converters="clr-namespace:Client.Converters"
+             Title="PersonDetailPage">
+    <ContentPage.Resources>
+        <converters:StatusEnumToTextConverter x:Key="StatusEnumToTextConverter" />
+    </ContentPage.Resources>
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="10">
+
+                <Grid RowDefinitions="Auto, *">
+                    <Grid 
+                        ColumnDefinitions=".3*, .7*"
+                        ColumnSpacing="5"
+                        RowDefinitions="*, *, *, *, *, *, *"
+                        RowSpacing="10">
+
+                        <!--Row 1 Id-->
+                        <Label 
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="Id:"/>
+
+                        <Label 
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Style="{StaticResource ValueLabelStyle}"
+                            Text="{Binding Id}" />
+
+                        <!--Row 2 First name-->
+                        <Label 
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Text="First name:"/>
+
+                        <Label 
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Style="{StaticResource ValueLabelStyle}"
+                            Text="{Binding FirstName}"/>
+
+                        <!--Row 3 Last name-->
+                        <Label 
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Text="Last name:"/>
+
+                        <Label 
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Style="{StaticResource ValueLabelStyle}"
+                            Text="{Binding LastName}" />
+
+                        <!--Row 4 Gender-->
+                        <Label 
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Text="Gender:"/>
+
+                        <Label 
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Style="{StaticResource ValueLabelStyle}"
+                            Text="{Binding Gender}"/>
+
+                        <!--Row 5 Country-->
+                        <Label 
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Text="Country:"/>
+
+                        <Label 
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Style="{StaticResource ValueLabelStyle}"
+                            Text="{Binding Country}"/>
+
+                        <!--Row 6 Age-->
+                        <Label 
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            Text="Age:"/>
+
+                        <Label 
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            Style="{StaticResource ValueLabelStyle}"
+                            Text="{Binding Age}"/>
+
+                        <!--Row 7 Date-->
+                        <Label 
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            Text="Date:"/>
+
+                        <Label 
+                            Grid.Row="6"
+                            Grid.Column="1"
+                            Style="{StaticResource ValueLabelStyle}"
+                            Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}"/>
+
+                    </Grid>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

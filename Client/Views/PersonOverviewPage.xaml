@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Client.Views.PersonOverviewPage"
+             xmlns:converters="clr-namespace:Client.Converters"
+             Title="PersonOverviewPage">
+
+    <ContentPage.Resources>
+        <converters:StatusEnumToTextConverter x:Key="StatusEnumToTextConverter" />
+    </ContentPage.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- For Label -->
+            <RowDefinition Height="Auto"/>
+            <!-- For Buttons -->
+            <RowDefinition Height="*"/>
+            <!-- For CollectionView -->
+        </Grid.RowDefinitions>
+
+        <Label
+        Text="This application allows you to upload .xlsx file, edit data, and save it!"
+        HorizontalOptions="Center"
+        SemanticProperties.HeadingLevel="Level1"
+        Grid.Row="0"
+        Margin="10" />
+
+        <HorizontalStackLayout
+        Grid.Row="1"
+        HorizontalOptions="Center"
+        Margin="0,10">
+            <Button 
+            Text="Upload file" 
+            Clicked="OnUploadFileClicked"
+            HorizontalOptions="Center"
+            Margin="10" />
+            <Button 
+            Text="Save data" 
+            Clicked="OnSaveFileClicked"
+            HorizontalOptions="Center"
+            Margin="10" />
+        </HorizontalStackLayout>
+
+        <ScrollView Grid.Row="2">
+            <CollectionView
+            ItemsSource="{Binding People}"
+            SelectedItem="{Binding SelectedPerson, Mode=TwoWay}"
+            SelectionMode="Single"
+            SelectionChangedCommand="{Binding NavigateToSelectedDetailCommand}">
+
+
+                <!-- Number | FirstName | LastName | Gender | Country | Age | Date | Id | Update? | Delete? -->
+                <CollectionView.Header>
+                    <Grid Padding="5" ColumnDefinitions="50, 100, 100, 80, 200, 50, 200, 100">
+                        <Label 
+                        Text="#" 
+                        Grid.Column="0" 
+                        BackgroundColor="LightGray" 
+                        FontAttributes="Bold" 
+                        HorizontalTextAlignment="Center" />
+
+                        <Label 
+                        Text="First Name" 
+                        Grid.Column="1" 
+                        BackgroundColor="LightGray" 
+                        FontAttributes="Bold" 
+                        HorizontalTextAlignment="Center" />
+
+                        <Label 
+                        Text="Last Name" 
+                        Grid.Column="2" 
+                        BackgroundColor="LightGray" 
+                        FontAttributes="Bold" 
+                        HorizontalTextAlignment="Center" />
+
+                        <Label 
+                        Text="Gender" 
+                        Grid.Column="3" 
+                        BackgroundColor="LightGray" 
+                        FontAttributes="Bold" 
+                        HorizontalTextAlignment="Center" />
+
+                        <Label 
+                        Text="Country" 
+                        Grid.Column="4" 
+                        BackgroundColor="LightGray" 
+                        FontAttributes="Bold" 
+                        HorizontalTextAlignment="Center" />
+
+                        <Label 
+                        Text="Age" 
+                        Grid.Column="5" 
+                        BackgroundColor="LightGray" 
+                        FontAttributes="Bold" 
+                        HorizontalTextAlignment="Center" />
+
+                        <Label 
+                        Text="Date" 
+                        Grid.Column="6" 
+                        BackgroundColor="LightGray" 
+                        FontAttributes="Bold" 
+                        HorizontalTextAlignment="Center" />
+
+                        <Label 
+                        Text="Id" 
+                        Grid.Column="7"
+                        BackgroundColor="LightGray" 
+                        FontAttributes="Bold" 
+                        HorizontalTextAlignment="Center" />
+                        <!--<Label Text="Update" Grid.Column="8" BackgroundColor="LightGray" FontAttributes="Bold"/>
+                    <Label Text="Delete" Grid.Column="9" BackgroundColor="LightGray" FontAttributes="Bold"/>-->
+                    </Grid>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="1" ColumnDefinitions="50, 100, 100, 80, 200, 50, 200, 100">
+                            <Label 
+                            Text="{Binding Number}" 
+                            Grid.Column="0" 
+                            BackgroundColor="{Binding ValidationStatus, Converter={StaticResource StatusEnumToTextConverter}}"
+                            HorizontalTextAlignment="Center"/>
+
+                            <Label 
+                            Text="{Binding FirstName}" 
+                            Grid.Column="1" 
+                            BackgroundColor="{Binding ValidationStatus, Converter={StaticResource StatusEnumToTextConverter}}" 
+                            HorizontalTextAlignment="Center"/>
+
+                            <Label 
+                            Text="{Binding LastName}" 
+                            Grid.Column="2" 
+                            BackgroundColor="{Binding ValidationStatus, Converter={StaticResource StatusEnumToTextConverter}}" 
+                            HorizontalTextAlignment="Center"/>
+
+                            <Label 
+                            Text="{Binding Gender}" 
+                            Grid.Column="3" 
+                            BackgroundColor="{Binding ValidationStatus, Converter={StaticResource StatusEnumToTextConverter}}"
+                            HorizontalTextAlignment="Center"/>
+
+                            <Label 
+                            Text="{Binding Country}" 
+                            Grid.Column="4" 
+                            BackgroundColor="{Binding ValidationStatus, Converter={StaticResource StatusEnumToTextConverter}}" 
+                            HorizontalTextAlignment="Center"/>
+
+                            <Label 
+                            Text="{Binding Age}" 
+                            Grid.Column="5" 
+                            BackgroundColor="{Binding ValidationStatus, Converter={StaticResource StatusEnumToTextConverter}}"
+                            HorizontalTextAlignment="Center"/>
+
+                            <Label 
+                            Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}" 
+                            Grid.Column="6" 
+                            BackgroundColor="{Binding ValidationStatus, Converter={StaticResource StatusEnumToTextConverter}}"
+                            HorizontalTextAlignment="Center"/>
+
+                            <Label 
+                            Text="{Binding Id}" 
+                            Grid.Column="7" 
+                            BackgroundColor="{Binding ValidationStatus, Converter={StaticResource StatusEnumToTextConverter}}"
+                            HorizontalTextAlignment="Center"/>
+                            <!--<Button Text="Update" Grid.Column="8"/>
+                        <Button Text="Delete" Grid.Column="9"/>-->
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </Grid>
+</ContentPage>
