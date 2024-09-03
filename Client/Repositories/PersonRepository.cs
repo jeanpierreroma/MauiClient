@@ -33,9 +33,13 @@ namespace Client.Repositories
 
                 return people ?? [];
             }
-            catch (Exception)
+            catch (HttpRequestException ex)
             {
-                return [];
+                throw new HttpRequestException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"{ex.Message}");
             }
         }
 

@@ -5,7 +5,7 @@ namespace Client.Services
 {
     public class PersonService : IPersonService
     {
-        private List<PersonModel> _people;
+        private List<PersonModel> _people = new();
         private readonly IPersonRepository _personRepository;
 
         public PersonService(IPersonRepository personRepository)

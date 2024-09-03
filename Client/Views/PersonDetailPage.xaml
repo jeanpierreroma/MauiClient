@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:Client.ViewModels"
              xmlns:converters="clr-namespace:Client.Converters"
              Title="PersonDetailPage">
+    
     <ContentPage.Resources>
         <converters:StatusEnumToTextConverter x:Key="StatusEnumToTextConverter" />
     </ContentPage.Resources>
@@ -108,5 +109,11 @@
                 </Grid>
             </VerticalStackLayout>
         </ScrollView>
+        <Grid 
+            BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"
+            IsVisible="{Binding IsLoading}">
+            
+            <ActivityIndicator IsRunning="{Binding IsLoading}" />
+        </Grid>
     </Grid>
 </ContentPage>

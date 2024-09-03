@@ -3,15 +3,15 @@ using Client.Mappers;
 using Client.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Client.Services;
+using Client.ViewModels.Base;
 
 
 
 namespace Client.ViewModels
 {
-    public class PersonListOverviewViewModel : INotifyPropertyChanged
+    public class PersonListOverviewViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private ObservableCollection<PersonListItemViewModel> _people = new();
 
@@ -67,7 +67,12 @@ namespace Client.ViewModels
             _navigationService = navigationService;
         }
 
-        public async Task UploadFile()
+        public override async Task LoadAsync()
+        {
+            await Loading(UploadFileASync);
+        }
+
+        public async Task UploadFileASync()
         {
             try
             {
@@ -94,14 +99,6 @@ namespace Client.ViewModels
             {
                 throw new Exception(ex.Message);
             }
-        }
-
-
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

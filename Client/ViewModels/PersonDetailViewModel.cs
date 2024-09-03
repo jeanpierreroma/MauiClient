@@ -1,13 +1,10 @@
 ﻿using Client.Models;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Microsoft.Maui.Controls;
-using System.Text.Json;
 using Client.Services;
+using Client.ViewModels.Base;
 
 namespace Client.ViewModels
 {
-    public class PersonDetailViewModel : INotifyPropertyChanged, IQueryAttributable
+    public class PersonDetailViewModel : ViewModelBase, IQueryAttributable
     {
         private int _id;
         private string _firstName = string.Empty;
@@ -123,11 +120,11 @@ namespace Client.ViewModels
             }
         }
 
-        //private async Task UpdatePerson(PersonModel person)
-        //{
-        //    var personModel = await _personService.UpdatePerson(person);
-        //    MapPersonModelToPersonDetailViewModel(personModel);
-        //}
+        public override async Task LoadAsync()
+        {
+            await Loading(async () => await GetPerson(Id));
+        }
+
         private void MapPersonModelToPersonDetailViewModel(PersonModel personModel)
         {
             Id = personModel.Id;
@@ -139,19 +136,12 @@ namespace Client.ViewModels
             Date = personModel.Date;
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public async void ApplyQueryAttributes(IDictionary<string, object> query)
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             var personId = query["PersonId"].ToString();
             if(int.TryParse(personId, out var selectedId))
             { 
                 Id = selectedId;
-                await GetPerson(Id);
             }
         }
     }

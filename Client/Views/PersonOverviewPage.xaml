@@ -7,6 +7,8 @@
 
     <ContentPage.Resources>
         <converters:StatusEnumToTextConverter x:Key="StatusEnumToTextConverter" />
+        
+        
     </ContentPage.Resources>
 
     <Grid>
@@ -170,5 +172,11 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
+        <Grid Grid.Row="2"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"
+            IsVisible="{Binding IsLoading}">    
+
+            <ActivityIndicator IsRunning="{Binding IsLoading}" />
+        </Grid>
     </Grid>
 </ContentPage>
