@@ -113,6 +113,19 @@ namespace Client.ViewModels
             }
         }
 
+        public async Task<string> SaveDataAsync()
+        {
+            try
+            {
+                string responce = await _personService.SavePeople();
+                return responce;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         private void UpdatePeopleList(List<PersonModel> people)
         {
             List<PersonListItemViewModel> listItems = people

@@ -6,7 +6,7 @@ namespace Client.Services
     {
         Task<List<PersonModel>> UploadFile(Stream streamFile, string fileName);
         Task<PersonModel> UpdatePerson(PersonModel person);
-        Task<string> SavePeople(List<PersonModel> people);
+        Task<string> SavePeople();
 
         Task<PersonModel> GetPersonById(int id);
         List<PersonModel> GetPeople();

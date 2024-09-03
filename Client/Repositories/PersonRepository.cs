@@ -52,7 +52,7 @@ namespace Client.Repositories
                 var json = JsonSerializer.Serialize(people);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await client.PatchAsync("http://localhost:5168/api/Data/save-data", content);
+                var response = await client.PostAsync("api/Data/save-data", content);
                 return await response.Content.ReadAsStringAsync();
             }
             catch (Exception)

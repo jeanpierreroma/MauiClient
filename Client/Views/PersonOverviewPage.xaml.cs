@@ -28,15 +28,14 @@ public partial class PersonOverviewPage : ContentPage
 
     private async void OnSaveFileClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("Error", "Save button method", "Ok");
-        //try
-        //{
-        //    var response = await Sender.SaveDataOnServer(_dataList);
-        //    await DisplayAlert("Response from Server", response, "Ok");
-        //}
-        //catch (Exception ex)
-        //{
-        //    await DisplayAlert("Error", ex.Message, "Ok");
-        //}
+        try
+        {
+            var response = await _vm.SaveDataAsync();
+            await DisplayAlert("Response from Server", response, "Ok");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "Ok");
+        }
     }
 }

@@ -13,9 +13,9 @@ namespace Client.Services
             _personRepository = personRepository;
         }
 
-        public Task<string> SavePeople(List<PersonModel> people)
+        public Task<string> SavePeople()
         {
-            return _personRepository.SavePeople(people);
+            return _personRepository.SavePeople(_people);
         }
 
         public async Task<PersonModel> UpdatePerson(PersonModel person)
