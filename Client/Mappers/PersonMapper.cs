@@ -19,5 +19,19 @@ namespace Client.Mappers
                 (ValidationStatusEnum)personModel.Validation
             );
         }
+
+        public static PersonModel MapPersonDetailViewModelToPersonModel(PersonDetailViewModel personDetailViewModel)
+        {
+            return new PersonModel
+            {
+                Id = personDetailViewModel.Id,
+                FirstName = personDetailViewModel.FirstName,
+                LastName = personDetailViewModel.LastName,
+                Gender = personDetailViewModel.Gender,
+                Country = personDetailViewModel.Country,
+                Age = personDetailViewModel.Age,
+                Date = personDetailViewModel.Date
+            };
+        }
     }
 }

@@ -9,6 +9,8 @@ namespace Client
             InitializeComponent();
 
             Routing.RegisterRoute("person", typeof(PersonDetailPage));
+            Routing.RegisterRoute("person/add", typeof(PersonAddEditPage));
+            Routing.RegisterRoute("person/edit", typeof(PersonAddEditPage));
         }
     }
 }

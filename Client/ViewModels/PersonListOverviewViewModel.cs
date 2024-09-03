@@ -5,13 +5,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using Client.Services;
-using Client.ViewModels.Base;
+using System.Runtime.CompilerServices;
 
 
 
 namespace Client.ViewModels
 {
-    public class PersonListOverviewViewModel : ViewModelBase, INotifyPropertyChanged
+    public class PersonListOverviewViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<PersonListItemViewModel> _people = new();
 
@@ -21,6 +21,7 @@ namespace Client.ViewModels
         private readonly INavigationService _navigationService;
 
         public ICommand NavigateToSelectedDetailCommand { get; }
+        public ICommand NavigateToAddPersonCommand { get; }
 
         private async Task NavigateToSelectedDetail()
         {
@@ -29,6 +30,11 @@ namespace Client.ViewModels
                 await _navigationService.GoToPersonDetail(SelectedPerson.Id);
                 SelectedPerson = null;
             }
+        }
+
+        private async Task NavigateToAddPerson()
+        {
+            await _navigationService.GoToAddPerson();
         }
 
         public ObservableCollection<PersonListItemViewModel> People
@@ -62,14 +68,10 @@ namespace Client.ViewModels
             INavigationService navigationService)
         {
             NavigateToSelectedDetailCommand = new Command(async () => await NavigateToSelectedDetail());
+            NavigateToAddPersonCommand = new Command(async () => await NavigateToAddPerson());
 
             _personService = personService;
             _navigationService = navigationService;
-        }
-
-        public override async Task LoadAsync()
-        {
-            await Loading(UploadFileASync);
         }
 
         public async Task UploadFileASync()
@@ -99,6 +101,12 @@ namespace Client.ViewModels
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

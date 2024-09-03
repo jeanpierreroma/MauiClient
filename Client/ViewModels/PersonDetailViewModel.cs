@@ -1,6 +1,8 @@
-﻿using Client.Models;
+﻿using Client.Mappers;
+using Client.Models;
 using Client.Services;
 using Client.ViewModels.Base;
+using System.Windows.Input;
 
 namespace Client.ViewModels
 {
@@ -13,6 +15,10 @@ namespace Client.ViewModels
         private string _country = string.Empty;
         private int _age;
         private DateTime _date = DateTime.UtcNow;
+
+        private readonly INavigationService _navigationService;
+        private readonly IPersonService _personService;
+
 
         public int Id
         {
@@ -99,16 +105,24 @@ namespace Client.ViewModels
             }
         }
 
-        public string PersonInformation
+        public ICommand NavigateToEditPersonCommand { get; }
+
+        private async Task NavigateToEditPerson()
         {
-            get { return $"{Id}\t{FirstName} {LastName}"; }
+            var detailModel = PersonMapper.MapPersonDetailViewModelToPersonModel(this);
+            await _navigationService.GoToEditPerson(detailModel);
         }
 
-        private readonly IPersonService _personService;
 
-        public PersonDetailViewModel(IPersonService personService)
+        public PersonDetailViewModel(
+            IPersonService personService, 
+            INavigationService navigationService)
         {
+            NavigateToEditPersonCommand = new Command(async () => await NavigateToEditPerson());
+
+
             _personService = personService;
+            _navigationService = navigationService;
         }
 
         private async Task GetPerson(int id)

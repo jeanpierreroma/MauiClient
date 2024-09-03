@@ -46,7 +46,7 @@ namespace Client
         private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
         {
             builder.Services.AddSingleton<IPersonService, PersonService>();
-            builder.Services.AddTransient<INavigationService, NavigationService>();
+            builder.Services.AddSingleton<INavigationService, NavigationService>();
 
             return builder;
         }
@@ -56,6 +56,8 @@ namespace Client
             builder.Services.AddSingleton<PersonListOverviewViewModel>();
 
             builder.Services.AddTransient<PersonDetailViewModel>();
+
+            builder.Services.AddTransient<PersonAddEditViewModel>();
             return builder;
         }
 
@@ -64,6 +66,7 @@ namespace Client
             builder.Services.AddSingleton<PersonOverviewPage>();
 
             builder.Services.AddTransient<PersonDetailPage>();
+            builder.Services.AddTransient<PersonAddEditPage>();
             return builder;
         }
     }

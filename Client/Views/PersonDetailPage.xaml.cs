@@ -1,9 +1,8 @@
 using Client.ViewModels;
-using Client.ViewModels.Base;
 
 namespace Client.Views;
 
-public partial class PersonDetailPage : ContentPage
+public partial class PersonDetailPage : ContentPageBase
 {
 	public PersonDetailPage(PersonDetailViewModel vm)
 	{
@@ -11,16 +10,4 @@ public partial class PersonDetailPage : ContentPage
 
 		BindingContext = vm;
 	}
-
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-
-        if (BindingContext is not IViewModelBase ivmb)
-        {
-            return;
-        }
-
-        ivmb.InitializeAsyncCommand.Execute(null);
-    }
 }

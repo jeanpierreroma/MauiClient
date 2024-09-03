@@ -18,7 +18,7 @@ public partial class PersonOverviewPage : ContentPage
     {
         try
         {
-            await _vm.LoadAsync();
+            await _vm.UploadFileASync();
         }
         catch (Exception ex)
         {

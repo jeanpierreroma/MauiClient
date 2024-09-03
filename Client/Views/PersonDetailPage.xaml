@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<views:ContentPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Client.Views.PersonDetailPage"
              xmlns:vm="clr-namespace:Client.ViewModels"
              xmlns:converters="clr-namespace:Client.Converters"
+             xmlns:views="clr-namespace:Client.Views"
              Title="PersonDetailPage">
     
     <ContentPage.Resources>
@@ -107,6 +108,11 @@
 
                     </Grid>
                 </Grid>
+                <Button 
+                        Text="Edit person"
+                        Command="{Binding NavigateToEditPersonCommand}"
+                        HorizontalOptions="Center"
+                        Margin="10"/>
             </VerticalStackLayout>
         </ScrollView>
         <Grid 
@@ -116,4 +122,4 @@
             <ActivityIndicator IsRunning="{Binding IsLoading}" />
         </Grid>
     </Grid>
-</ContentPage>
+</views:ContentPageBase>
