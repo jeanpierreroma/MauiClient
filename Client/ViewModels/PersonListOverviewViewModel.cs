@@ -6,6 +6,9 @@ using System.ComponentModel;
 using System.Windows.Input;
 using Client.Services;
 using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm.Messaging;
+using Client.Messages;
+using Client.Store;
 
 
 
@@ -13,16 +16,16 @@ namespace Client.ViewModels
 {
     public class PersonListOverviewViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<PersonListItemViewModel> _people = new();
+        private ObservableCollection<PersonListItemViewModel> _people;
 
         private PersonListItemViewModel? _selectedPerson;
 
         private readonly IPersonService _personService;
         private readonly INavigationService _navigationService;
+        private readonly PersonStore _personStore;
 
         public ICommand NavigateToSelectedDetailCommand { get; }
         public ICommand NavigateToAddPersonCommand { get; }
-
         private async Task NavigateToSelectedDetail()
         {
             if (SelectedPerson is not null)
@@ -65,16 +68,33 @@ namespace Client.ViewModels
 
         public PersonListOverviewViewModel(
             IPersonService personService,
-            INavigationService navigationService)
+            INavigationService navigationService, 
+            PersonStore personStore)
         {
             NavigateToSelectedDetailCommand = new Command(async () => await NavigateToSelectedDetail());
             NavigateToAddPersonCommand = new Command(async () => await NavigateToAddPerson());
 
             _personService = personService;
             _navigationService = navigationService;
+            _personStore = personStore;
+
+            _people = new();
+            _personStore.PersonAddedOrChanged += OnPersonAddedOrChanged;
         }
 
-        public async Task UploadFileASync()
+        private void OnPersonAddedOrChanged()
+        {
+            People.Clear();
+            GetPeople();
+        }
+
+        private void GetPeople()
+        {
+            List<PersonModel> people = _personService.GetPeople();
+            UpdatePeopleList(people);
+        }
+
+        public async Task UploadFileAsync()
         {
             try
             {
@@ -84,23 +104,23 @@ namespace Client.ViewModels
                     var stream = await result.OpenReadAsync();
 
                     List<PersonModel> people = await _personService.UploadFile(stream, result.FileName);
-
-                    List<PersonListItemViewModel> listItems = new();
-                    int index = 1;
-                    foreach (var person in people.Take(100))
-                    {
-                        listItems.Add(PersonMapper.MapPersonModelToPersonListItemViewModel(person, index++));
-                    }
-
-                    People.Clear();
-                    People = listItems.ToObservableCollection();
-
+                    UpdatePeopleList(people);
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        private void UpdatePeopleList(List<PersonModel> people)
+        {
+            List<PersonListItemViewModel> listItems = people
+                .Select((person, index) => PersonMapper.MapPersonModelToPersonListItemViewModel(person, index + 1))
+                .ToList();
+
+            People.Clear();
+            People = listItems.ToObservableCollection();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

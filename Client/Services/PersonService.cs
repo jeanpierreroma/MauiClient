@@ -18,20 +18,43 @@ namespace Client.Services
             return _personRepository.SavePeople(people);
         }
 
-        public Task<PersonModel> UpdatePerson(PersonModel person)
+        public async Task<PersonModel> UpdatePerson(PersonModel person)
         {
-            return _personRepository.UpdatePerson(person);
+            PersonModel? updatedPerson = await _personRepository.UpdatePerson(person);
+
+            PersonModel? existingPerson = _people.FirstOrDefault(p => p.Id == updatedPerson.Id);
+
+            if (existingPerson != null)
+            {
+                existingPerson.FirstName = updatedPerson.FirstName;
+                existingPerson.LastName = updatedPerson.LastName;
+                existingPerson.Age = updatedPerson.Age;
+                existingPerson.Gender = updatedPerson.Gender;
+                existingPerson.Date = updatedPerson.Date;
+                existingPerson.Status = updatedPerson.Status;
+            }
+            else
+            {
+                _people.Add(updatedPerson);
+            }
+
+            return updatedPerson;
         }
 
         public async Task<List<PersonModel>> UploadFile(Stream streamFile, string fileName)
         {
-            _people = await _personRepository.UploadFile(streamFile, fileName);
+            _people = (await _personRepository.UploadFile(streamFile, fileName)).Take(100).ToList();
             return _people;
         }
 
         public async Task<PersonModel> GetPersonById(int id)
         {
             return await Task.FromResult(_people.First(p => p.Id == id));
+        }
+
+        public List<PersonModel> GetPeople()
+        {
+            return _people;
         }
     }
 }

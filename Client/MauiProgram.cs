@@ -1,5 +1,6 @@
 ﻿using Client.Repositories;
 using Client.Services;
+using Client.Store;
 using Client.ViewModels;
 using Client.Views;
 using CommunityToolkit.Maui;
@@ -47,6 +48,7 @@ namespace Client
         {
             builder.Services.AddSingleton<IPersonService, PersonService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
+            builder.Services.AddSingleton<PersonStore>();
 
             return builder;
         }

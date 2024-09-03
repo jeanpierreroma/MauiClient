@@ -1,12 +1,19 @@
-﻿using Client.Models;
+﻿using Client.Mappers;
+using Client.Messages;
+using Client.Models;
 using Client.Services;
+using Client.Store;
 using Client.ViewModels.Base;
+using CommunityToolkit.Mvvm.Messaging;
+using System.Windows.Input;
 
 namespace Client.ViewModels
 {
     public class PersonAddEditViewModel : ViewModelBase, IQueryAttributable
     {
         private readonly IPersonService _personService;
+        private readonly INavigationService _navigationService;
+        private readonly PersonStore _personStore;
 
         public PersonModel? personModel;
 
@@ -118,9 +125,33 @@ namespace Client.ViewModels
             }
         }
 
-        public PersonAddEditViewModel(IPersonService personService)
+        public ICommand SubmitCommand { get; }
+
+        private async Task Submit()
         {
+            PersonModel personModel = PersonMapper.MapPersonAddEditViewModeToPersonModel(this);
+            try
+            {
+                var recievedPerson = await _personService.UpdatePerson(personModel);
+                _personStore.CreateOrChangePreson();
+            }
+            catch (Exception ex)
+            {
+                // TODO
+            }
+            await _navigationService.GoToOverview();
+        }
+
+        public PersonAddEditViewModel(
+            IPersonService personService,
+            INavigationService navigationService,
+            PersonStore personStore)
+        {
+            SubmitCommand = new Command(async () => await Submit());
+
             _personService = personService;
+            _navigationService = navigationService;
+            _personStore = personStore;
         }
 
         public override async Task LoadAsync()
@@ -140,7 +171,7 @@ namespace Client.ViewModels
         {
             if (personModel is not null)
             {
-                Id = personModel.Id;
+                Id = personModel.Id!.Value;
                 FirstName = personModel.FirstName;
                 LastName = personModel.LastName;
                 Gender = personModel.Gender;

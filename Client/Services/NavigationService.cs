@@ -19,6 +19,11 @@ namespace Client.Services
             await Shell.Current.GoToAsync("person/edit", navigationParameter);
         }
 
+        public Task GoToOverview()
+        {
+            return Shell.Current.GoToAsync("//overview");
+        }
+
         public Task GoToPersonDetail(int id)
         {
             var parameters = new Dictionary<string, object> { {  "PersonId", id } };

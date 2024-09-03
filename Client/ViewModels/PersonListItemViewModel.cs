@@ -7,12 +7,13 @@ namespace Client.ViewModels
     {
         private int _number;
         private int _id;
-        private string _firstName = string.Empty;
-        private string _lastName = string.Empty;
-        private string _gender = string.Empty;
-        private string _country = string.Empty;
-        private int _age;
-        private DateTime _date = DateTime.UtcNow;
+        private string? _firstName = string.Empty;
+        private string? _lastName = string.Empty;
+        private string? _gender = string.Empty;
+        private string? _country = string.Empty;
+        private int? _age;
+        private DateTime? _date = DateTime.UtcNow;
+        private ValidationStatusEnum _validationStatus;
 
         public int Number
         {
@@ -38,89 +39,100 @@ namespace Client.ViewModels
                 }
             }
         }
-        public string FirstName
+        public string? FirstName
         {
             get => _firstName;
             set
             {
-                if (!value.Equals(_firstName))
+                if (!Equals(value, _firstName))
                 {
                     _firstName = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public string LastName
+        public string? LastName
         {
             get => _lastName;
             set
             {
-                if (!value.Equals(_lastName))
+                if (!Equals(value, _lastName))
                 {
                     _lastName = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public string Gender
+        public string? Gender
         {
             get => _gender;
             set
             {
-                if (!value.Equals(_gender))
+                if (!Equals(value, _gender))
                 {
                     _gender = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public string Country
+        public string? Country
         {
             get => _country;
             set
             {
-                if (!value.Equals(_country))
+                if (!Equals(value, _country))
                 {
                     _country = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public int Age
+        public int? Age
         {
             get => _age;
             set
             {
-                if (!value.Equals(_age))
+                if (!Equals(value, _age))
                 {
                     _age = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public DateTime Date
+        public DateTime? Date
         {
             get => _date;
             set
             {
-                if (!value.Equals(_date))
+                if (!Equals(value, _date))
                 {
                     _date = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public ValidationStatusEnum ValidationStatus { get; set; }
+        public ValidationStatusEnum ValidationStatus 
+        { 
+            get => _validationStatus; 
+            set
+            {
+                if(!Equals(value, _validationStatus))
+                {
+                    _validationStatus = value;
+                    OnPropertyChanged();
+                }
+            } 
+        }
 
         public PersonListItemViewModel(
             int number,
             int id,
-            string firstName,
-            string lastName,
-            string gender,
-            string country,
-            int age,
-            DateTime date,
+            string? firstName,
+            string? lastName,
+            string? gender,
+            string? country,
+            int? age,
+            DateTime? date,
             ValidationStatusEnum isValid)
         {
             Number = number;
@@ -131,6 +143,7 @@ namespace Client.ViewModels
             Country = country;
             Age = age;
             Date = date;
+            ValidationStatus = isValid;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

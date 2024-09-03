@@ -68,15 +68,19 @@ namespace Client.Repositories
             try
             {
                 var json = JsonSerializer.Serialize(person);
-                var content = new StringContent(JsonSerializer.Serialize(person), Encoding.UTF8, "application/json");
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await client.PatchAsync("http://localhost:5168/api/Data/update-data", content);
+                var response = await client.PostAsync($"api/Data/update-data", content);
                 return await response.Content.ReadFromJsonAsync<PersonModel>(
                         new JsonSerializerOptions(JsonSerializerDefaults.Web));
             }
-            catch (Exception)
+            catch (JsonException ex)
             {
-                return null;
+                throw new JsonException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

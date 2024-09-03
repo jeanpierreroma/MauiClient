@@ -3,6 +3,13 @@
     "Windows Machine": {
       "commandName": "MsixPackage",
       "nativeDebugging": false
+    },
+    "Profile 1": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\code\\MyProjects\\MauiClientApiServer\\Client\\Client\\bin\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\AppX",
+      "nativeDebugging": true,
+      "remoteDebugEnabled": false,
+      "hotReloadEnabled": false
     }
   }
 }

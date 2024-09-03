@@ -9,12 +9,12 @@ namespace Client.ViewModels
     public class PersonDetailViewModel : ViewModelBase, IQueryAttributable
     {
         private int _id;
-        private string _firstName = string.Empty;
-        private string _lastName = string.Empty;
-        private string _gender = string.Empty;
-        private string _country = string.Empty;
-        private int _age;
-        private DateTime _date = DateTime.UtcNow;
+        private string? _firstName = string.Empty;
+        private string? _lastName = string.Empty;
+        private string? _gender = string.Empty;
+        private string? _country = string.Empty;
+        private int? _age;
+        private DateTime? _date = DateTime.UtcNow;
 
         private readonly INavigationService _navigationService;
         private readonly IPersonService _personService;
@@ -32,72 +32,72 @@ namespace Client.ViewModels
                 }
             }
         }
-        public string FirstName
+        public string? FirstName
         {
             get => _firstName;
             set
             {
-                if (!value.Equals(_firstName))
+                if (!Equals(value, _firstName))
                 {
                     _firstName = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public string LastName
+        public string? LastName
         {
             get => _lastName;
             set
             {
-                if (!value.Equals(_lastName))
+                if (!Equals(value, _lastName))
                 {
                     _lastName = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public string Gender
+        public string? Gender
         {
             get => _gender;
             set
             {
-                if (!value.Equals(_gender))
+                if (!Equals(value, _gender))
                 {
                     _gender = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public string Country
+        public string? Country
         {
             get => _country;
             set
             {
-                if (!value.Equals(_country))
+                if (!Equals(value, _country))
                 {
                     _country = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public int Age
+        public int? Age
         {
             get => _age;
             set
             {
-                if (!value.Equals(_age))
+                if (!Equals(value, _age))
                 {
                     _age = value;
                     OnPropertyChanged();
                 }
             }
         }
-        public DateTime Date
+        public DateTime? Date
         {
             get => _date;
             set
             {
-                if (!value.Equals(_date))
+                if (!Equals(value, _date))
                 {
                     _date = value;
                     OnPropertyChanged();
@@ -141,7 +141,7 @@ namespace Client.ViewModels
 
         private void MapPersonModelToPersonDetailViewModel(PersonModel personModel)
         {
-            Id = personModel.Id;
+            Id = personModel.Id!.Value;
             FirstName = personModel.FirstName;
             LastName = personModel.LastName;
             Gender = personModel.Gender;

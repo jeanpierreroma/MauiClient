@@ -9,14 +9,14 @@ namespace Client.Mappers
         {
             return new PersonListItemViewModel(
                 index,
-                personModel.Id,
+                personModel.Id!.Value,
                 personModel.FirstName,
                 personModel.LastName,
                 personModel.Gender,
                 personModel.Country,
                 personModel.Age,
                 personModel.Date,
-                (ValidationStatusEnum)personModel.Validation
+                (ValidationStatusEnum)personModel.Status
             );
         }
 
@@ -31,6 +31,20 @@ namespace Client.Mappers
                 Country = personDetailViewModel.Country,
                 Age = personDetailViewModel.Age,
                 Date = personDetailViewModel.Date
+            };
+        }
+        
+        public static PersonModel MapPersonAddEditViewModeToPersonModel(PersonAddEditViewModel personAddEditViewModel)
+        {
+            return new PersonModel
+            {
+                Id = personAddEditViewModel.Id,
+                FirstName = personAddEditViewModel.FirstName,
+                LastName = personAddEditViewModel.LastName,
+                Gender = personAddEditViewModel.Gender,
+                Country = personAddEditViewModel.Country,
+                Age = personAddEditViewModel.Age,
+                Date = personAddEditViewModel.Date
             };
         }
     }

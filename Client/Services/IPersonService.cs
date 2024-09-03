@@ -9,5 +9,6 @@ namespace Client.Services
         Task<string> SavePeople(List<PersonModel> people);
 
         Task<PersonModel> GetPersonById(int id);
+        List<PersonModel> GetPeople();
     }
 }

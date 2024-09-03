@@ -8,5 +8,6 @@ namespace Client.Services
         Task GoToPersonDetail(int id);
         Task GoToEditPerson(PersonModel personModel);
         Task GoToAddPerson();
+        Task GoToOverview();
     }
 }
