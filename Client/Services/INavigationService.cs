@@ -1,5 +1,4 @@
 ﻿using Client.Models;
-using Client.ViewModels;
 
 namespace Client.Services
 {
